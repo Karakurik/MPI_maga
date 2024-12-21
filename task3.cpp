@@ -5,9 +5,6 @@
 int main(int argc, char **argv) {
     int rank, count;
 
-    const int LENGTH = 10;
-    int a[LENGTH];
-
     MPI_Status status;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -15,6 +12,9 @@ int main(int argc, char **argv) {
     if (rank == 1) {
         mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count());
         uniform_int_distribution<> dist(0, 100);
+
+        const int LENGTH = 10;
+        int a[LENGTH];
 
         for (int i = 0; i < 10; ++i) {
             a[i] = dist(rnd);
@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
     } else {
         MPI_Probe(1, 1, MPI_COMM_WORLD, &status);
         MPI_Get_count(&status, MPI_INT, &count);
+        int a[count];
         MPI_Recv(&a, count, MPI_INT, 1, 1, MPI_COMM_WORLD, &status);
 
         printf("process %d: ", rank);
