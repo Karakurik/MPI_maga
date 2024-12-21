@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    int blockSize = N / size;
+    int blockSize = (N / size) + (N % size % 2);
     vector<double> xLocal(blockSize);
 
     MPI_Scatter(x.data(), blockSize, MPI_DOUBLE, xLocal.data(), blockSize, MPI_DOUBLE, 0, MPI_COMM_WORLD);

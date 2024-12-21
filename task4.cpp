@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
 
     const int N = 9;
     int workersCount = size - 1;
-    int blockSize = N / workersCount;
+    int blockSize = (N / workersCount) + (N % workersCount % 2);
 
     vector<int> xFull, yFull;
     vector<int> zAddFull, zMulFull;

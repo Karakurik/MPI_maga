@@ -4,12 +4,18 @@
 
 int main(int argc, char **argv) {
 
-    int rank;
+    int rank, count;
     int const SIZE = 10;
     int a[SIZE];
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &count);
+
+    if (count != 2) {
+        if (rank == 0) std::cerr << "This program requires exactly 2 processes.\n";
+        MPI_Abort(MPI_COMM_WORLD, 1);
+    }
 
     if (rank == 0) {
         mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count());

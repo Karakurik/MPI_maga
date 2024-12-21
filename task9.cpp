@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
 
     const int N = 8;
     vector<double> A, x(N), z(N);
-    int blockSize = N / size;
+    int blockSize = (N / size) + (N % size % 2);
     vector<double> localA(blockSize * N);
 
     if (rank == 0) {

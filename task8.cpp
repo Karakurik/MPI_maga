@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    int blockSize = N / size;
+    int blockSize = (N / size) + (N % size % 2);
     vector<double> localVec(blockSize);
 
     MPI_Scatter(arr.data(), blockSize, MPI_DOUBLE, localVec.data(), blockSize, MPI_DOUBLE, 0, MPI_COMM_WORLD);
